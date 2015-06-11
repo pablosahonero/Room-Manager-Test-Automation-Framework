@@ -5,38 +5,41 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.roommanager.properties.PropertyReader;
+import org.roommanager.model.admin.login.Login;
+import org.roommanager.pages.admin.home.HomePage;
+import org.roommanager.util.PropertyReader;
 
 public class LoginPage {
 	private WebDriver driver;
-	private PropertyReader properties;
+	private By signInButtonLocator = Login.SIGNINBUTTON.value;
+	private By usernameTextFieldLocator = Login.USERNAMETEXTFIELD.value;
+	private By passwordTextFieldLocator = Login.PASSWORDTEXTFIELD.value;
 	
 	public LoginPage(WebDriver driver){
 		this.driver = driver;
-		properties = new PropertyReader();
-		driver.get(properties.getLoginUrl());
+		driver.get(PropertyReader.getLoginUrl());
 	}
 	
-	public LoginPage clickSignInButton(){
-		WebElement usernameTextField = (new WebDriverWait(driver, 60))
-				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button")));
-		usernameTextField.click();
-		return this;
+	public HomePage clickSignInButton(){
+		WebElement signInButton = (new WebDriverWait(driver, 60))
+			.until(ExpectedConditions.presenceOfElementLocated(signInButtonLocator));
+		signInButton.click();
+		return new HomePage(driver);
 	}
 	
 	public LoginPage enterUserName(){
 		WebElement usernameTextField = (new WebDriverWait(driver, 60))
-				.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("input[type='text']")));
+			.until(ExpectedConditions.presenceOfElementLocated(usernameTextFieldLocator));
 		usernameTextField.clear();
-		usernameTextField.sendKeys(properties.getUsername());
+		usernameTextField.sendKeys(PropertyReader.getUsername());
 		return this;
 	}
 	
 	public LoginPage enterPassword(){
 		WebElement passwordTextField = (new WebDriverWait(driver, 60))
-				.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("input[type='password']")));
+			.until(ExpectedConditions.presenceOfElementLocated(passwordTextFieldLocator));
 		passwordTextField.clear();
-		passwordTextField.sendKeys(properties.getUserPassword());
+		passwordTextField.sendKeys(PropertyReader.getUserPassword());
 		return this;
 	}
 }

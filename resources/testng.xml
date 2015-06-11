@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<suite name="Room Manager Test Suite">
+   <listeners>
+      <listener class-name="org.uncommons.reportng.HTMLReporter"/>
+      <listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>
+   </listeners>
+   <test name="Verify a Resource is created">
+    <classes>
+      <class name="org.roommanager.test.admin.login.VerifyUserLogin" />   
+    </classes>
+  </test>
+</suite>    
