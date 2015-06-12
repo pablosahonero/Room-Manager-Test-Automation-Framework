@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.roommanager.model.admin.login.Login;
 import org.roommanager.pages.admin.home.HomePage;
 import org.roommanager.util.PropertyReader;
+import org.roommanager.util.TestLogger;
 
 public class LoginPage {
 	private WebDriver driver;
@@ -24,22 +25,25 @@ public class LoginPage {
 		WebElement signInButton = (new WebDriverWait(driver, 60))
 			.until(ExpectedConditions.presenceOfElementLocated(signInButtonLocator));
 		signInButton.click();
+		TestLogger.info("Sign In Button was clicked");
 		return new HomePage(driver);
 	}
 	
-	public LoginPage enterUserName(){
+	public LoginPage enterUserName(String username){
 		WebElement usernameTextField = (new WebDriverWait(driver, 60))
 			.until(ExpectedConditions.presenceOfElementLocated(usernameTextFieldLocator));
 		usernameTextField.clear();
-		usernameTextField.sendKeys(PropertyReader.getUsername());
+		usernameTextField.sendKeys(username);
+		TestLogger.info("User Name: <" + username +  "> was entered");
 		return this;
 	}
 	
-	public LoginPage enterPassword(){
+	public LoginPage enterPassword(String password){
 		WebElement passwordTextField = (new WebDriverWait(driver, 60))
 			.until(ExpectedConditions.presenceOfElementLocated(passwordTextFieldLocator));
 		passwordTextField.clear();
-		passwordTextField.sendKeys(PropertyReader.getUserPassword());
+		passwordTextField.sendKeys(password);
+		TestLogger.info("Password: <" + password +  "> was entered");
 		return this;
 	}
 }

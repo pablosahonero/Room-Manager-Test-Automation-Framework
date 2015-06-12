@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.roommanager.model.admin.resource.CreateResource;
+import org.roommanager.util.TestLogger;
 
 public class CreateResourcePage {
 	private WebDriver driver;
@@ -23,6 +24,7 @@ public class CreateResourcePage {
 			.until(ExpectedConditions.presenceOfElementLocated(resourceNameTextFieldLocator));
 		resourceNameTextField.clear();
 		resourceNameTextField.sendKeys(resourceName);
+		TestLogger.info("Resource Name: <" + resourceName +  "> was entered");
 		return this;
 	}
 	
@@ -31,6 +33,7 @@ public class CreateResourcePage {
 			.until(ExpectedConditions.presenceOfElementLocated(resourceDisplayNameTextFieldLocator));
 		resourceDisplayNameTextField.clear();
 		resourceDisplayNameTextField.sendKeys(resourceDisplayName);
+		TestLogger.info("Resource Display Name: <" + resourceDisplayName +  "> was entered");
 		return this;
 	}
 	
@@ -39,6 +42,7 @@ public class CreateResourcePage {
 			.until(ExpectedConditions.presenceOfElementLocated(resourceDescriptionAreaTextLocator));
 		resourceDescriptionAreaText.clear();
 		resourceDescriptionAreaText.sendKeys(resourceDescription);
+		TestLogger.info("Resource Description: <" + resourceDescription +  "> was entered");
 		return this;
 	}
 	
@@ -46,6 +50,9 @@ public class CreateResourcePage {
 		WebElement saveResourceButton = (new WebDriverWait(driver, 60))
 			.until(ExpectedConditions.presenceOfElementLocated(saveResourceButtonLocator));
 		saveResourceButton.click();
+		(new WebDriverWait(driver, 60))
+		.until(ExpectedConditions.invisibilityOfElementLocated(saveResourceButtonLocator));
+		TestLogger.info("Save Resource button was clicked");
 		return new ResourcePage(driver);
 	}
 	

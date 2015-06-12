@@ -32,6 +32,10 @@ public class PropertyReader {
 		return getProperties().getProperty("loginurl");
 	}
 	
+	public static String getRoomManagerUrl(){
+		return getProperties().getProperty("roommanagerurl");
+	}
+	
 	public static String getUsername(){
 		return getProperties().getProperty("username");
 	}

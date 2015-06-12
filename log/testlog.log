@@ -1,0 +1,44 @@
+2015-06-12 18:03:54,334 - org.roommanager.util.TestLogger -INFO - User Name: <Administrator> was entered
+2015-06-12 18:03:54,676 - org.roommanager.util.TestLogger -INFO - Password: <Monitor202> was entered
+2015-06-12 18:03:54,769 - org.roommanager.util.TestLogger -INFO - Sign In Button was clicked
+2015-06-12 18:03:55,580 - org.roommanager.util.TestLogger -INFO - User Name: <Administrator> was entered
+2015-06-12 18:03:55,795 - org.roommanager.util.TestLogger -INFO - Password: <Monitor202> was entered
+2015-06-12 18:03:55,933 - org.roommanager.util.TestLogger -INFO - Sign In Button was clicked
+2015-06-12 18:06:33,785 - org.roommanager.util.TestLogger -INFO - User Name: <Administrator> was entered
+2015-06-12 18:06:33,968 - org.roommanager.util.TestLogger -INFO - Password: <Monitor202> was entered
+2015-06-12 18:06:34,062 - org.roommanager.util.TestLogger -INFO - Sign In Button was clicked
+2015-06-12 18:06:35,469 - org.roommanager.util.TestLogger -INFO - User Name: <Administrator> was entered
+2015-06-12 18:06:35,763 - org.roommanager.util.TestLogger -INFO - Password: <Monitor202> was entered
+2015-06-12 18:06:35,851 - org.roommanager.util.TestLogger -INFO - Sign In Button was clicked
+2015-06-12 18:23:55,999 - org.roommanager.util.TestLogger -INFO - User Name: <Administrator> was entered
+2015-06-12 18:23:56,800 - org.roommanager.util.TestLogger -INFO - Password: <Monitor202> was entered
+2015-06-12 18:23:56,994 - org.roommanager.util.TestLogger -INFO - Sign In Button was clicked
+2015-06-12 18:23:57,249 - org.roommanager.util.TestLogger -INFO - Home Page Link Text: <[[ChromeDriver: chrome on WIN8_1 (5aa0f0cd08d2703e1b9e011d732d9f24)] -> link text: Room Manager]> was retrieved
+2015-06-12 18:23:57,747 - org.roommanager.util.TestLogger -INFO - User Name: <Administrator> was entered
+2015-06-12 18:23:58,002 - org.roommanager.util.TestLogger -INFO - Password: <Monitor202> was entered
+2015-06-12 18:23:58,096 - org.roommanager.util.TestLogger -INFO - Sign In Button was clicked
+2015-06-12 18:23:58,710 - org.roommanager.util.TestLogger -INFO - Home Page Link Text: <[[ChromeDriver: chrome on WIN8_1 (5aa0f0cd08d2703e1b9e011d732d9f24)] -> link text: Room Manager]> was retrieved
+2015-06-12 18:23:58,853 - org.roommanager.util.TestLogger -INFO - Resources Page Link was clicked
+2015-06-12 18:24:01,342 - org.roommanager.util.TestLogger -INFO - Add Resource button was clicked
+2015-06-12 18:24:02,700 - org.roommanager.util.TestLogger -INFO - Resource Name: <ResourcePablo> was entered
+2015-06-12 18:24:03,365 - org.roommanager.util.TestLogger -INFO - Resource Display Name: <ResourcePablo> was entered
+2015-06-12 18:24:04,423 - org.roommanager.util.TestLogger -INFO - Resource Description: <Description ResourcePablo> was entered
+2015-06-12 18:24:07,006 - org.roommanager.util.TestLogger -INFO - Save Resource button was clicked
+2015-06-12 18:24:07,898 - org.roommanager.util.TestLogger -INFO - Resource Name: <ResourcePablo> was entered in the Search Resource Text Field
+2015-06-12 18:24:08,200 - org.roommanager.util.TestLogger -INFO - First Resource Table Element Name: <ResourcePablo> was retrieved
+2015-06-12 18:28:43,886 - org.roommanager.util.TestLogger -INFO - User Name: <Administrator> was entered
+2015-06-12 18:28:44,143 - org.roommanager.util.TestLogger -INFO - Password: <Monitor202> was entered
+2015-06-12 18:28:44,234 - org.roommanager.util.TestLogger -INFO - Sign In Button was clicked
+2015-06-12 18:28:45,574 - org.roommanager.util.TestLogger -INFO - Home Page Link Text: <[[ChromeDriver: chrome on WIN8_1 (f83d58fb3f474244f026f5864b902562)] -> link text: Room Manager]> was retrieved
+2015-06-12 18:28:45,812 - org.roommanager.util.TestLogger -INFO - User Name: <Administrator> was entered
+2015-06-12 18:28:46,264 - org.roommanager.util.TestLogger -INFO - Password: <Monitor202> was entered
+2015-06-12 18:28:46,358 - org.roommanager.util.TestLogger -INFO - Sign In Button was clicked
+2015-06-12 18:28:46,430 - org.roommanager.util.TestLogger -INFO - Home Page Link Text: <[[ChromeDriver: chrome on WIN8_1 (f83d58fb3f474244f026f5864b902562)] -> link text: Room Manager]> was retrieved
+2015-06-12 18:28:46,877 - org.roommanager.util.TestLogger -INFO - Resources Page Link was clicked
+2015-06-12 18:28:49,827 - org.roommanager.util.TestLogger -INFO - Add Resource button was clicked
+2015-06-12 18:28:50,935 - org.roommanager.util.TestLogger -INFO - Resource Name: <ResourcePablo> was entered
+2015-06-12 18:28:51,316 - org.roommanager.util.TestLogger -INFO - Resource Display Name: <ResourcePablo> was entered
+2015-06-12 18:28:52,236 - org.roommanager.util.TestLogger -INFO - Resource Description: <Description ResourcePablo> was entered
+2015-06-12 18:28:54,752 - org.roommanager.util.TestLogger -INFO - Save Resource button was clicked
+2015-06-12 18:28:55,464 - org.roommanager.util.TestLogger -INFO - Resource Name: <ResourcePablo> was entered in the Search Resource Text Field
+2015-06-12 18:28:55,633 - org.roommanager.util.TestLogger -INFO - First Resource Table Element Name: <ResourcePablo> was retrieved

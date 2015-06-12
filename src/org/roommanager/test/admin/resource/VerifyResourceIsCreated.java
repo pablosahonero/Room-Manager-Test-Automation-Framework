@@ -1,49 +1,70 @@
 package org.roommanager.test.admin.resource;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+
 import org.openqa.selenium.WebDriver;
 import org.roommanager.pages.admin.home.HomePage;
 import org.roommanager.pages.admin.login.LoginPage;
+import org.roommanager.pages.admin.resource.CreateResourcePage;
 import org.roommanager.pages.admin.resource.ResourcePage;
+import org.roommanager.util.HttpRequest;
+import org.roommanager.util.PropertyReader;
+import org.roommanager.util.TestLogger;
 import org.roommanager.util.WebBrowser;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
 public class VerifyResourceIsCreated {
 	private WebDriver driver;
-	private StringBuffer verificationErrors = new StringBuffer();
 	
-	@BeforeTest
+	@BeforeSuite
 	public void setUp() throws Exception {
-		driver = WebBrowser.getInstance().getGoogleChromeWebDriver();
+		driver = WebBrowser.getGoogleChromeWebDriver();
 	}
 	
-	@Test(priority=1)
-	public void VerifyAResourceIsCreated() throws Exception {
+	@Test(priority=0)
+	public void verifyAResourceIsCreated() throws Exception {
+		String username = PropertyReader.getUsername();
+		String password = PropertyReader.getUserPassword();
+		String homePageExpectedLinkText = "Room Manager";
+		String resourceName = "ResourcePablo";
+		String resourceDisplayName = "ResourcePablo";
+		String resourceDescription = "Description ResourcePablo";
+		
+		TestLogger.debug ("Start of Test: Verify a Resource is created"); 
+		
 		LoginPage login = new LoginPage(driver);
+		
 		HomePage adminHome = login
-			.enterUserName()
-			.enterPassword()
+			.enterUserName(username)
+			.enterPassword(password)
 			.clickSignInButton();
-		assertEquals("Room Manager", adminHome.getHomePageLinkText());
+		assertEquals(homePageExpectedLinkText, adminHome.getHomePageLinkText());
 		
 		ResourcePage resources =  adminHome
-			.selectResourcesLink()
+			.selectResourcesLink();
+		
+		CreateResourcePage createResource = resources
 			.clickAddResourceButton()
-			.enterResourceName("Resource759822661")
-			.enterResourceDisplayName("Resource759822661")
-			.enterResourceDescription("Description Resource759822661")
-			.clickSaveResourceButton();
+			.enterResourceName(resourceName)
+			.enterResourceDisplayName(resourceDisplayName)
+			.enterResourceDescription(resourceDescription);
+		
+		resources = createResource
+			.clickSaveResourceButton()
+			.searchResourceByName(resourceName);
+		assertEquals(resources.getFirstTableElementName(), resourceName);
 	}
 	
 	@AfterTest
-	public void tearDown() throws Exception {
+	public void testTearDown(){
+		HttpRequest.deleteResourceByName("ResourcePablo");
+	}
+	
+	@AfterSuite
+	public void suiteTearDown(){
 		driver.quit();
-	    String verificationErrorString = verificationErrors.toString();
-	    if (!"".equals(verificationErrorString)) {
-	      fail(verificationErrorString);
-	    }
 	}
 }
