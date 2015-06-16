@@ -6,7 +6,6 @@ import org.openqa.selenium.WebDriver;
 import org.roommanager.pages.admin.home.HomePage;
 import org.roommanager.pages.admin.login.LoginPage;
 import org.roommanager.util.PropertyReader;
-import org.roommanager.util.TestLogger;
 import org.roommanager.util.WebBrowser;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
@@ -20,13 +19,11 @@ public class VerifyUserLogin {
 		driver = WebBrowser.getGoogleChromeWebDriver();
 	}
 	
-	@Test(priority=1)
+	@Test
 	public void verifyAUserCanLogin() throws Exception {
 		String username = PropertyReader.getUsername();
 		String password = PropertyReader.getUserPassword();
 		String homePageExpectedLinkText = "Room Manager";
-		
-		TestLogger.debug ("Start of Test: Verify a User can Login"); 
 		
 		LoginPage login = new LoginPage(driver);
 		

@@ -1,39 +1,42 @@
 package org.roommanager.test.admin.resource;
 
-import static org.junit.Assert.assertEquals;
-
 import org.openqa.selenium.WebDriver;
 import org.roommanager.pages.admin.home.HomePage;
 import org.roommanager.pages.admin.login.LoginPage;
-import org.roommanager.pages.admin.resource.CreateResourcePage;
+import org.roommanager.pages.admin.resource.RemoveResourcePage;
 import org.roommanager.pages.admin.resource.ResourcePage;
 import org.roommanager.util.HttpRequest;
 import org.roommanager.util.PropertyReader;
-import org.roommanager.util.TestLogger;
 import org.roommanager.util.WebBrowser;
+import org.testng.Assert;
 import org.testng.annotations.AfterSuite;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.Listeners;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-@Listeners(org.roommanager.util.ScreenShot.class)
-public class VerifyResourceIsCreated {
-	private WebDriver driver;
+public class VerifyResourceIsRemoved {
+private WebDriver driver;
 	
 	@BeforeSuite
 	public void setUp() throws Exception {
 		driver = WebBrowser.getGoogleChromeWebDriver();
 	}
 	
-	@Test
-	public void verifyAResourceIsCreated() throws Exception {
-		String username = PropertyReader.getUsername();
-		String password = PropertyReader.getUserPassword();
+	@BeforeTest
+	public void testSetUp(){
 		String resourceName = "ResourcePablo";
 		String resourceDisplayName = "ResourcePablo";
 		String resourceDescription = "Description ResourcePablo";
-		String errorMessage = "The test failed because the created Resource was not found";
+		String resourceIcon = "";
+		HttpRequest.createResource(resourceName, resourceDisplayName, resourceIcon, resourceDescription);
+	}
+	
+	@Test
+	public void verifyAResourceIsRemoved() throws Exception {
+		String username = PropertyReader.getUsername();
+		String password = PropertyReader.getUserPassword();
+		String resourceName = "ResourcePablo";
+		String errorMessage = "The test failed because the Resource was not removed";
 		
 		LoginPage login = new LoginPage(driver);
 		
@@ -45,23 +48,17 @@ public class VerifyResourceIsCreated {
 		ResourcePage resources =  adminHome
 			.selectResourcesLink();
 		
-		CreateResourcePage createResource = resources
-			.clickAddResourceButton()
-			.enterResourceName(resourceName)
-			.enterResourceDisplayName(resourceDisplayName)
-			.enterResourceDescription(resourceDescription);
+		RemoveResourcePage removeResource = resources
+			.searchResourceByName(resourceName)
+			.clickFirstTableElementCheckBox()
+			.clickRemoveResourceButton();
 		
-		resources = createResource
-			.clickSaveResourceButton()
+		resources = removeResource
+			.clickRemoveResourceButton()
 			.searchResourceByName(resourceName);
 		
-		assertEquals(errorMessage, resources.getFirstTableElementName(), resourceName);
-	}
-	
-	@AfterTest
-	public void testTearDown(){
-		String resourceName = "ResourcePablo";
-		HttpRequest.deleteResourceByName(resourceName);
+		boolean hasResources = resources.hasResourceTableElements();
+		Assert.assertTrue(hasResources, errorMessage);
 	}
 	
 	@AfterSuite

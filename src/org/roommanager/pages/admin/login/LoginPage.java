@@ -19,6 +19,7 @@ public class LoginPage {
 	public LoginPage(WebDriver driver){
 		this.driver = driver;
 		driver.get(PropertyReader.getLoginUrl());
+		driver.navigate().refresh();
 	}
 	
 	public HomePage clickSignInButton(){
