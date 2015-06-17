@@ -9,7 +9,6 @@ import org.roommanager.pages.admin.resource.CreateResourcePage;
 import org.roommanager.pages.admin.resource.ResourcePage;
 import org.roommanager.util.HttpRequest;
 import org.roommanager.util.PropertyReader;
-import org.roommanager.util.TestLogger;
 import org.roommanager.util.WebBrowser;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterTest;

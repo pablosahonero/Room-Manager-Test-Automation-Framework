@@ -47,5 +47,9 @@ public class PropertyReader {
 	public static String getChromeDriverPath(){
 		return getProperties().getProperty("chromedriverpath");
 	}
+	
+	public static String getTabletUrl(){
+		return getProperties().getProperty("tableturl");
+	}
 }
 

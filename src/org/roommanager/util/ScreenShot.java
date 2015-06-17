@@ -8,53 +8,52 @@ import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
-
 import org.testng.*;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.net.*;
 
 public class ScreenShot extends TestListenerAdapter {
 
-	//Take screen shot only for failed test case
 	@Override
-	public void onTestFailure(ITestResult tr) {
-		takeScreenShot();
+	public void onTestFailure(ITestResult testResult) {
+		takeScreenShot(testResult.getName());
 	}
 
-	@Override
-	public void onTestSkipped(ITestResult tr) {
-	//ScreenShot();
-	}
-
-	@Override
-	public void onTestSuccess(ITestResult tr) {
-	//ScreenShot();
-	}
-
-	private void takeScreenShot() {
-	try {
-
-	String NewFileNamePath;
-
-	Toolkit toolkit = Toolkit.getDefaultToolkit();
-	Dimension scrnsize = toolkit.getScreenSize();
-
-	File directory = new File (".");
+	private void takeScreenShot(String testName) {
+	String fileDirectory = ".";
+	String dateFormatAsString = "dd_MMM_yyyy__hh_mm_ssaa";
+	String reportNgProperty = "org.uncommons.reportng.escape-output";
+	String filePath = "\\screenshots\\";
+	String imageFormat = "png";
+	String failedTestImageLinkTag = "<a href=\"[filePath]"
+            + "\"><img src=\"file:///[filePath]"
+            + "\" alt=\"\"" + "height='100' width='100'/> <br />";
 	
-	DateFormat dateFormat = new SimpleDateFormat("dd_MMM_yyyy__hh_mm_ssaa");
-	Date date = new Date();
-
-	InetAddress ownIP=InetAddress.getLocalHost();
-	NewFileNamePath = directory.getCanonicalPath()+ "\\screenshots\\"+ dateFormat.format(date)+"_"+ownIP.getHostAddress()+ ".png";
-
-	Robot robot = new Robot();
-	BufferedImage bi=robot.createScreenCapture(new Rectangle(scrnsize));
-	ImageIO.write(bi, "png", new File(NewFileNamePath));
+	try {
+		System.setProperty(reportNgProperty, "false");
+		String fileNamePath;
+	
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
+		Dimension screensize = toolkit.getScreenSize();
+	
+		File directory = new File (fileDirectory);
+		
+		DateFormat dateFormat = new SimpleDateFormat(dateFormatAsString);
+		Date date = new Date();
+	
+		fileNamePath = directory.getCanonicalPath()+ 
+			filePath + "/" + testName +
+			"-" + dateFormat.format(date)+ 
+			"." +imageFormat;
+	
+		Robot robot = new Robot();
+		BufferedImage bi=robot.createScreenCapture(new Rectangle(screensize));
+		ImageIO.write(bi, imageFormat, new File(fileNamePath));
+		failedTestImageLinkTag = failedTestImageLinkTag
+			.replace("[filePath]", fileNamePath);
+		Reporter.log(failedTestImageLinkTag); 
 	} 
 	catch (AWTException e) {
 	e.printStackTrace();

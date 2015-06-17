@@ -1,23 +1,25 @@
 package org.roommanager.test.admin.resource;
 
+import static org.junit.Assert.assertEquals;
+
 import org.openqa.selenium.WebDriver;
 import org.roommanager.pages.admin.home.HomePage;
 import org.roommanager.pages.admin.login.LoginPage;
-import org.roommanager.pages.admin.resource.RemoveResourcePage;
+import org.roommanager.pages.admin.resource.ResourceInfoPage;
 import org.roommanager.pages.admin.resource.ResourcePage;
 import org.roommanager.util.HttpRequest;
 import org.roommanager.util.PropertyReader;
 import org.roommanager.util.WebBrowser;
-import org.testng.Assert;
 import org.testng.annotations.AfterSuite;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 @Listeners(org.roommanager.util.ScreenShot.class)
-public class VerifyResourceIsRemoved {
-	private WebDriver driver;
+public class VerifyResourceIsUpdated {
+private WebDriver driver;
 	
 	@BeforeSuite
 	public void setUp() throws Exception {
@@ -38,7 +40,9 @@ public class VerifyResourceIsRemoved {
 		String username = PropertyReader.getUsername();
 		String password = PropertyReader.getUserPassword();
 		String resourceName = "ResourcePablo";
-		String errorMessage = "The test failed because the Resource was not removed";
+		String resourceNameUpdated = "ResourcePabloUpdated";
+		String resourceDisplayNameUpdated = "ResourcePabloDisplayNameUpdated";
+		String errorMessage = "The test failed because the Resource was not updated";
 		
 		LoginPage login = new LoginPage(driver);
 		
@@ -50,17 +54,25 @@ public class VerifyResourceIsRemoved {
 		ResourcePage resources =  adminHome
 			.selectResourcesLink();
 		
-		RemoveResourcePage removeResource = resources
+		ResourceInfoPage resourceInfo = resources
 			.searchResourceByName(resourceName)
-			.clickFirstTableElementCheckBox()
-			.clickRemoveResourceButton();
+			.doubleClickFirstTableElement();
 		
-		resources = removeResource
-			.clickRemoveResourceButton()
-			.searchResourceByName(resourceName);
+		resources = resourceInfo
+			.enterResourceName(resourceNameUpdated)
+			.enterResourceDisplayName(resourceDisplayNameUpdated)
+			.clickSaveResourceButton()
+			.searchResourceByName(resourceNameUpdated);
 		
-		boolean resourceTableHasResources = resources.hasResourceTableElements();
-		Assert.assertTrue(resourceTableHasResources, errorMessage);
+		assertEquals(errorMessage, resources.getFirstTableElementName(), resourceNameUpdated);
+		assertEquals(errorMessage, resources.getFirstTableElementDisplayName(), resourceDisplayNameUpdated);
+			
+	}
+	
+	@AfterTest
+	public void testTearDown(){
+		String resourceName = "ResourcePabloUpdated";
+		HttpRequest.deleteResourceByName(resourceName);
 	}
 	
 	@AfterSuite

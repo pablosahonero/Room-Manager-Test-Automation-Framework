@@ -9,7 +9,6 @@ public enum Resource {
 	FIRSTRESOURCESTABLEELEMENT(By.cssSelector("div.ng-scope > span.ng-binding")),
 	FIRSTRESOURCETABLEELEMENTCHECKBOX(By.cssSelector("input.ngSelectionCheckbox")),
 	RESOURCETABLE(By.cssSelector("div.ngCanvas"));
-
 	public By value;
 	
 	private Resource(By locator){

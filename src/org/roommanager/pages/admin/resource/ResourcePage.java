@@ -3,6 +3,7 @@ package org.roommanager.pages.admin.resource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.roommanager.model.admin.resource.Resource;
@@ -15,7 +16,7 @@ public class ResourcePage extends SideMenuBarPage{
 	private By removeResourceButtonLocator = Resource.REMOVERESOURCEBUTTON.value;
 	private By searchResourceTextFieldLocator = Resource.SEARCHRESOURCETEXTFIELD.value;
 	private By firstResourcesTableElementLocator = Resource.FIRSTRESOURCESTABLEELEMENT.value;
-	private By firstResourcesTableCheckBoxLocator = Resource.FIRSTRESOURCESTABLEELEMENT.value;
+	private By firstResourcesTableCheckBoxLocator = Resource.FIRSTRESOURCETABLEELEMENTCHECKBOX.value;
 	private By resourceTableLocator = Resource.RESOURCETABLE.value;
 	
 	
@@ -53,6 +54,25 @@ public class ResourcePage extends SideMenuBarPage{
 		WebElement firstResourceTableElement = (new WebDriverWait(driver, 160))
 			.until(ExpectedConditions.presenceOfElementLocated(firstResourcesTableElementLocator));
 		TestLogger.info("First Resource Table Element Name: <" + firstResourceTableElement.getText() + "> was retrieved");
+		return firstResourceTableElement.getText();
+	}
+	
+	public ResourceInfoPage doubleClickFirstTableElement(){
+		(new WebDriverWait(driver, 160))
+			.until(ExpectedConditions.presenceOfElementLocated(firstResourcesTableElementLocator));
+		WebElement firstResourceTableElement = driver.findElement(firstResourcesTableElementLocator);
+		Actions action = new Actions(driver);
+	    action.doubleClick(firstResourceTableElement);
+	    action.perform();
+	    TestLogger.info("Double Click on First Resource Table Element");
+		return new ResourceInfoPage(driver);
+	}
+	
+	public String getFirstTableElementDisplayName(){
+		(new WebDriverWait(driver, 160))
+			.until(ExpectedConditions.presenceOfElementLocated(firstResourcesTableElementLocator));
+		WebElement firstResourceTableElement = driver.findElements(firstResourcesTableElementLocator).get(1);
+		TestLogger.info("First Resource Table Element Display Name: <" + firstResourceTableElement.getText() + "> was retrieved");
 		return firstResourceTableElement.getText();
 	}
 	
