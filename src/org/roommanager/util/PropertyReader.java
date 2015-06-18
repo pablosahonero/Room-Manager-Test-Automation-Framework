@@ -51,5 +51,9 @@ public class PropertyReader {
 	public static String getTabletUrl(){
 		return getProperties().getProperty("tableturl");
 	}
+
+	public static String getBasicAuthentication(){
+		return getProperties().getProperty("basicAuthentiocation");
+	}
 }
 

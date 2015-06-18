@@ -37,11 +37,11 @@ public class ProvideCredentialPage {
 		return this;
 	}
 	
-	public SchedulerPage clickCreateButton(){
+	public SchedulerPage clickOkButton(){
 		WebElement okButton = (new WebDriverWait(driver, 60))
 			.until(ExpectedConditions.presenceOfElementLocated(okButtonLocator));
 		okButton.click();
-		TestLogger.info("Ok Button was clicked");
+		TestLogger.info("OK Button was clicked");
 		new WebDriverWait(driver, 60)
 			.until(ExpectedConditions.invisibilityOfElementLocated(okButtonLocator));
 		return new SchedulerPage(driver);

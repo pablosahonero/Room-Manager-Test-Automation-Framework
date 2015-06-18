@@ -14,10 +14,8 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-@Listeners(org.roommanager.util.ScreenShot.class)
 public class VerifyResourceIsUpdated {
 private WebDriver driver;
 	
@@ -36,7 +34,7 @@ private WebDriver driver;
 	}
 	
 	@Test
-	public void verifyAResourceIsRemoved() throws Exception {
+	public void verifyAResourceIsUpdated() throws Exception {
 		String username = PropertyReader.getUsername();
 		String password = PropertyReader.getUserPassword();
 		String resourceName = "ResourcePablo";

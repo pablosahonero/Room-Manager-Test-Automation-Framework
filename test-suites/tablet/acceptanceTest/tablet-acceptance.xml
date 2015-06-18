@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <suite name="Room Manager TABLET Meeting Test Suite" parallel="false">
-   <listeners>
-      <listener class-name="org.uncommons.reportng.HTMLReporter"/>
-      <listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>
-   </listeners>
-   <test name="Verify Meeting is created">
+  <listeners>
+   	<listener class-name="org.uncommons.reportng.HTMLReporter"/>
+    <listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>
+    <listener class-name="org.roommanager.util.ScreenShot"/>
+  </listeners>
+  <test name="Verify Meeting is created">
     <classes>
       <class name="org.roommanager.test.tablet.meeting.VerifyMeetingIsCreated"/>
+    </classes>
+  </test>
+  <test name="Verify Meeting is deleted">
+    <classes>
+      <class name="org.roommanager.test.tablet.meeting.VerifyMeetingIsDeleted"/>
     </classes>
   </test>
 </suite>    

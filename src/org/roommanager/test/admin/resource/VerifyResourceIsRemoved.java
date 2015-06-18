@@ -12,10 +12,8 @@ import org.testng.Assert;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-@Listeners(org.roommanager.util.ScreenShot.class)
 public class VerifyResourceIsRemoved {
 	private WebDriver driver;
 	

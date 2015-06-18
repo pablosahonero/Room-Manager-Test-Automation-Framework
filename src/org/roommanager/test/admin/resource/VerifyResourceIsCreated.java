@@ -13,10 +13,8 @@ import org.roommanager.util.WebBrowser;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-@Listeners(org.roommanager.util.ScreenShot.class)
 public class VerifyResourceIsCreated {
 	private WebDriver driver;
 	
