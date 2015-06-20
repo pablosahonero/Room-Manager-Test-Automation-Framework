@@ -16,7 +16,15 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 public class VerifyMeetingIsDeleted {
-private WebDriver driver;
+	private WebDriver driver;
+	private String organizer = PropertyReader.getUsername();
+	private String startTime = DateGenerator.getStartDate();
+	private String endTime = DateGenerator.getEndDate(60);
+	private String roomName = "SM-Room9";
+	private String meetingSubject = "Subject Meeting Pablo";
+	private String attendees = "\"admin@admin.com\"";
+	String password = PropertyReader.getUserPassword();
+	String errorMessage = "The Test failed because the meeting couldn't be found deleted";
 	
 	@BeforeSuite
 	public void suiteSetUp() throws Exception {
@@ -25,35 +33,25 @@ private WebDriver driver;
 	
 	@BeforeTest
 	public void testSetUp() throws Exception {
-		String organizer = PropertyReader.getUsername();
-		String startTime = DateGenerator.getStartDate();
-		String endTime = DateGenerator.getEndDate(60);
-		String roomName = "RoomgGC-01";
-		String meetingSubject = "Subject Meeting Pablo";
-		String attendees = "\"admin@admin.com\"";
+		
 		HttpRequest.createMeeting(organizer, meetingSubject, startTime, endTime, roomName, attendees);
 	}
 	
 	@Test
 	public void verifyAMeetingIsDeleted() throws Exception {
-		String password = PropertyReader.getUserPassword();
-		String roomName = "RoomgGC-01";
-		String meetingSubject = "Subject Meeting Pablo";
-		String errorMessage = "The Test failed because the meeting couldn't be found deleted";
 		
 		SettingPage settings = new SettingPage(driver);
 		
 		HomePage tabletHome = settings
 			.waitForSettingpageToLoad()
-			.searchRoomByName(roomName)
-			.clickFirstRoomTableElement()
+			.clickRoomItem(roomName)
 			.clickAcceptButton();
 		
 		SchedulerPage scheduler = tabletHome
-			.clickSchedulerLink()
-			.moveTimelineBox();
+			.clickSchedulerLink();
 		
 		ProvideCredentialPage credentials = scheduler
+			.moveTimelineBox(startTime)
 			.clickMeetingFromTimeLine(meetingSubject)
 			.clickRemoveButton();
 		

@@ -16,7 +16,7 @@ public class WebBrowser {
 	}
 	
 	public static WebDriver getGoogleChromeWebDriver(){
-		if(driver == null){
+		if(driver == null || (driver.toString().contains("(null)"))){
 			System.setProperty("webdriver.chrome.driver", PropertyReader.getChromeDriverPath());
 			driver = new ChromeDriver();
 			driver.manage().window().maximize();
@@ -25,7 +25,7 @@ public class WebBrowser {
 	}
 	
 	public static WebDriver getFirefoxWebDriver(){
-		if(driver == null){
+		if(driver == null || (driver.toString().contains("(null)"))){
 			driver = new FirefoxDriver();
 			driver.manage().window().maximize();
 		}

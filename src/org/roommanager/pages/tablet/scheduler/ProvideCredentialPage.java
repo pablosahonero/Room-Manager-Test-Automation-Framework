@@ -11,9 +11,9 @@ import org.roommanager.util.TestLogger;
 public class ProvideCredentialPage {
 	
 	private WebDriver driver;
-	private By okButtonLocator = ProvideCredential.OKBUTTON.value;
-	private By usernameTextFieldLocator = ProvideCredential.USERNAMETEXTFIELD.value;
-	private By passwordTextFieldLocator = ProvideCredential.PASSWORDTEXTFIELD.value;
+	private By okButtonLocator = ProvideCredential.OK_BUTTON.value;
+	private By usernameTextFieldLocator = ProvideCredential.USERNAME_TEXT_FIELD.value;
+	private By passwordTextFieldLocator = ProvideCredential.PASSWORD_TEXT_FIELD.value;
 	
 	public ProvideCredentialPage(WebDriver driver){
 		this.driver = driver;

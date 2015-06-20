@@ -16,6 +16,11 @@ import org.testng.annotations.Test;
 
 public class VerifyMeetingIsCreated {
 	private WebDriver driver;
+	private String username = PropertyReader.getUsername();
+	private String password = PropertyReader.getUserPassword();
+	private String roomName = "SM-Room9";
+	private String meetingSubject = "Subject Meeting Pablo";
+	private String errorMessage = "The Test failed because the created could not be found in the Scheduler";
 	
 	@BeforeSuite
 	public void suiteSetUp() throws Exception {
@@ -24,23 +29,16 @@ public class VerifyMeetingIsCreated {
 	
 	@Test
 	public void verifyAMeetingIsCreated() throws Exception {
-		String username = PropertyReader.getUsername();
-		String password = PropertyReader.getUserPassword();
-		String roomName = "RoomgGC-01";
-		String meetingSubject = "Subject Meeting Pablo";
-		String errorMessage = "The Test failed because the created could not be found in the Scheduler";
 		
 		SettingPage settings = new SettingPage(driver);
 		
 		HomePage tabletHome = settings
 			.waitForSettingpageToLoad()
-			.searchRoomByName(roomName)
-			.clickFirstRoomTableElement()
+			.clickRoomItem(roomName)
 			.clickAcceptButton();
 		
 		SchedulerPage scheduler = tabletHome
-			.clickSchedulerLink()
-			.moveTimelineBox();
+			.clickSchedulerLink();
 		
 		ProvideCredentialPage credentials = scheduler
 			.enterMeetingOrganizer(username)
@@ -57,8 +55,6 @@ public class VerifyMeetingIsCreated {
 	
 	@AfterTest
 	public void testTearDown() throws Exception {
-		String roomName = "RoomgGC-01";
-		String meetingSubject = "Subject Meeting Pablo";
 		HttpRequest.deleteMeetingBySubjectName(roomName, meetingSubject);
 	}
 	

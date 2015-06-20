@@ -10,7 +10,7 @@ import org.roommanager.util.TestLogger;
 
 public class RemoveResourcePage {
 	private WebDriver driver;
-	private By removeResourceButtonLocator = RemoveResource.REMOVEBUTTON.value;
+	private By removeResourceButtonLocator = RemoveResource.REMOVE_BUTTON.value;
 	
 	public RemoveResourcePage(WebDriver driver){
 		this.driver = driver;

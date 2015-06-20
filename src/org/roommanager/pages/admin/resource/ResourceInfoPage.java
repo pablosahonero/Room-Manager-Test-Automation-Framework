@@ -10,10 +10,10 @@ import org.roommanager.util.TestLogger;
 
 public class ResourceInfoPage {
 	private WebDriver driver;
-	private By resourceNameTextFieldLocator = ResourceInfo.RESOURCENAMEFIELD.value;
-	private By resourceDisplayNameTextFieldLocator = ResourceInfo.RESOURCEDISPLAYNAMEFIELD.value;
-	private By resourceDescriptionAreaTextLocator = ResourceInfo.RESOURCEDESCRIPTIONAREA.value;
-	private By saveResourceButtonLocator = ResourceInfo.SAVEBUTTON.value;
+	private By resourceNameTextFieldLocator = ResourceInfo.RESOURCE_NAME_FIELD.value;
+	private By resourceDisplayNameTextFieldLocator = ResourceInfo.RESOURCE_DISPLAY_NAME_FIELD.value;
+	private By resourceDescriptionAreaTextLocator = ResourceInfo.RESOURCE_DESCRIPTION_AREA.value;
+	private By saveResourceButtonLocator = ResourceInfo.SAVE_BUTTON.value;
 	
 	public ResourceInfoPage(WebDriver driver){
 		this.driver = driver;

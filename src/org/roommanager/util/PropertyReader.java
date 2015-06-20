@@ -21,7 +21,7 @@ public class PropertyReader {
 				try {
 					propertyFile.close();
 				} catch (IOException e) {
-					e.printStackTrace();
+					TestLogger.error(e.getMessage());
 				}
 			}
 		}

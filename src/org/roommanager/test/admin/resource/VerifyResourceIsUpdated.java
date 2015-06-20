@@ -17,7 +17,16 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 public class VerifyResourceIsUpdated {
-private WebDriver driver;
+	private WebDriver driver;
+	private String resourceName = "ResourcePablo";
+	private String resourceDisplayName = "ResourcePablo";
+	private String resourceDescription = "Description ResourcePablo";
+	private String resourceIcon = "";
+	private String username = PropertyReader.getUsername();
+	private String password = PropertyReader.getUserPassword();
+	private String resourceNameUpdated = "ResourcePabloUpdated";
+	private String resourceDisplayNameUpdated = "ResourcePabloDisplayNameUpdated";
+	private String errorMessage = "The test failed because the Resource was not updated";
 	
 	@BeforeSuite
 	public void setUp() throws Exception {
@@ -26,21 +35,12 @@ private WebDriver driver;
 	
 	@BeforeTest
 	public void testSetUp(){
-		String resourceName = "ResourcePablo";
-		String resourceDisplayName = "ResourcePablo";
-		String resourceDescription = "Description ResourcePablo";
-		String resourceIcon = "";
+		
 		HttpRequest.createResource(resourceName, resourceDisplayName, resourceIcon, resourceDescription);
 	}
 	
 	@Test
 	public void verifyAResourceIsUpdated() throws Exception {
-		String username = PropertyReader.getUsername();
-		String password = PropertyReader.getUserPassword();
-		String resourceName = "ResourcePablo";
-		String resourceNameUpdated = "ResourcePabloUpdated";
-		String resourceDisplayNameUpdated = "ResourcePabloDisplayNameUpdated";
-		String errorMessage = "The test failed because the Resource was not updated";
 		
 		LoginPage login = new LoginPage(driver);
 		
@@ -53,24 +53,20 @@ private WebDriver driver;
 			.selectResourcesLink();
 		
 		ResourceInfoPage resourceInfo = resources
-			.searchResourceByName(resourceName)
-			.doubleClickFirstTableElement();
+			.doubleClickOnResourceFromTable(resourceName);
 		
 		resources = resourceInfo
 			.enterResourceName(resourceNameUpdated)
 			.enterResourceDisplayName(resourceDisplayNameUpdated)
-			.clickSaveResourceButton()
-			.searchResourceByName(resourceNameUpdated);
+			.clickSaveResourceButton();
 		
-		assertEquals(errorMessage, resources.getFirstTableElementName(), resourceNameUpdated);
-		assertEquals(errorMessage, resources.getFirstTableElementDisplayName(), resourceDisplayNameUpdated);
-			
+		String actualResourceName = resources.getResourceNameInTable(resourceNameUpdated);
+		assertEquals(errorMessage, actualResourceName, resourceNameUpdated);
 	}
 	
 	@AfterTest
 	public void testTearDown(){
-		String resourceName = "ResourcePabloUpdated";
-		HttpRequest.deleteResourceByName(resourceName);
+		HttpRequest.deleteResourceByName(resourceNameUpdated);
 	}
 	
 	@AfterSuite

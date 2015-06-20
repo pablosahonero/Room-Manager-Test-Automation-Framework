@@ -3,9 +3,9 @@ package org.roommanager.model.admin.login;
 import org.openqa.selenium.By;
 
 public enum Login {
-	SIGNINBUTTON(By.xpath("//button")),
-	USERNAMETEXTFIELD(By.cssSelector("input[type='text']")),
-	PASSWORDTEXTFIELD(By.cssSelector("input[type='password']"));
+	SIGNIN_BUTTON(By.xpath("//button")),
+	USERNAME_TEXT_FIELD(By.cssSelector("input[type='text']")),
+	PASSWORD_TEXT_FIELD(By.cssSelector("input[type='password']"));
 	
 	public By value;
 	

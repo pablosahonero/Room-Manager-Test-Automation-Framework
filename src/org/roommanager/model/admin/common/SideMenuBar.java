@@ -4,12 +4,7 @@ import org.openqa.selenium.By;
 
 public enum SideMenuBar {
 
-	EMAILSERVERLINK(By.linkText("Email Servers")),
-	IMPERSONATIONLINK(By.linkText("Impersonation")),
-	CONFERENCELINK(By.linkText("Conference Rooms")),
-	RESOURCESLINK(By.linkText("Resources")),
-	ISSUESLINK(By.linkText("Issues")),
-	TABLETSLINK(By.linkText("Tablets"));
+	RESOURCES_LINK(By.linkText("Resources"));
 	
 	public By value;
 	

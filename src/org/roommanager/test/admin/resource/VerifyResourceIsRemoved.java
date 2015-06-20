@@ -16,6 +16,13 @@ import org.testng.annotations.Test;
 
 public class VerifyResourceIsRemoved {
 	private WebDriver driver;
+	private String username = PropertyReader.getUsername();
+	private String password = PropertyReader.getUserPassword();
+	private String resourceName = "ResourcePablo";
+	private String resourceDisplayName = "ResourcePablo";
+	private String resourceDescription = "Description ResourcePablo";
+	private String resourceIcon = "";
+	private String errorMessage = "The test failed because the Resource was not removed";
 	
 	@BeforeSuite
 	public void setUp() throws Exception {
@@ -24,20 +31,12 @@ public class VerifyResourceIsRemoved {
 	
 	@BeforeTest
 	public void testSetUp(){
-		String resourceName = "ResourcePablo";
-		String resourceDisplayName = "ResourcePablo";
-		String resourceDescription = "Description ResourcePablo";
-		String resourceIcon = "";
 		HttpRequest.createResource(resourceName, resourceDisplayName, resourceIcon, resourceDescription);
 	}
 	
 	@Test
 	public void verifyAResourceIsRemoved() throws Exception {
-		String username = PropertyReader.getUsername();
-		String password = PropertyReader.getUserPassword();
-		String resourceName = "ResourcePablo";
-		String errorMessage = "The test failed because the Resource was not removed";
-		
+
 		LoginPage login = new LoginPage(driver);
 		
 		HomePage adminHome = login
@@ -49,16 +48,14 @@ public class VerifyResourceIsRemoved {
 			.selectResourcesLink();
 		
 		RemoveResourcePage removeResource = resources
-			.searchResourceByName(resourceName)
-			.clickFirstTableElementCheckBox()
+			.clickOnResourceFromTable(resourceName)
 			.clickRemoveResourceButton();
 		
 		resources = removeResource
-			.clickRemoveResourceButton()
-			.searchResourceByName(resourceName);
+			.clickRemoveResourceButton();
 		
-		boolean resourceTableHasResources = resources.hasResourceTableElements();
-		Assert.assertTrue(resourceTableHasResources, errorMessage);
+		boolean resourceDoesNotExist = resources.verifyElementDoesNotExist(resourceName);
+		Assert.assertTrue(resourceDoesNotExist, errorMessage);
 	}
 	
 	@AfterSuite

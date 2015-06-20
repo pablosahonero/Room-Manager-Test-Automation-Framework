@@ -1,5 +1,7 @@
 package org.roommanager.pages.admin.resource;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,12 +14,14 @@ import org.roommanager.util.TestLogger;
 
 public class ResourcePage extends SideMenuBarPage{
 	private WebDriver driver;
-	private By addResourceButtonLocator = Resource.ADDRESOURCEBUTTON.value;
-	private By removeResourceButtonLocator = Resource.REMOVERESOURCEBUTTON.value;
-	private By searchResourceTextFieldLocator = Resource.SEARCHRESOURCETEXTFIELD.value;
-	private By firstResourcesTableElementLocator = Resource.FIRSTRESOURCESTABLEELEMENT.value;
-	private By firstResourcesTableCheckBoxLocator = Resource.FIRSTRESOURCETABLEELEMENTCHECKBOX.value;
-	private By resourceTableLocator = Resource.RESOURCETABLE.value;
+	private By addResourceButtonLocator = Resource.ADD_RESOURCE_BUTTON.value;
+	private By removeResourceButtonLocator = Resource.REMOVE_RESOURCE_BUTTON.value;
+	private By nextPageButtonLocator = Resource.NEXT_PAGE_BUTTON.value;
+	private By nextPageInputLocator = Resource.NEXT_PAGE_INPUT.value;
+	private By resourceTableNumberOfPagesLocator = Resource.RESOURCES_TABLE_NUMBER_OF_PAGES.value;
+	private By resourceListLocator = Resource.RESOURCES_LIST.value;
+	private By resourceListItemLocator = Resource.RESOURCE_TABLE_ITEM.value;
+	private By divElementLocator = Resource.DIV_ELEMENT.value;
 	
 	
 	public ResourcePage(WebDriver driver){
@@ -41,57 +45,83 @@ public class ResourcePage extends SideMenuBarPage{
 		return new RemoveResourcePage(driver);
 	}
 	
-	public ResourcePage searchResourceByName(String name){
-		WebElement searchResourceTextField = (new WebDriverWait(driver, 160))
-			.until(ExpectedConditions.presenceOfElementLocated(searchResourceTextFieldLocator));
-		searchResourceTextField.clear();
-		searchResourceTextField.sendKeys(name);
-		TestLogger.info("Resource Name: <" + name + "> was entered in the Search Resource Text Field");
-		return this;
-	}
-	
-	public String getFirstTableElementName(){
-		WebElement firstResourceTableElement = (new WebDriverWait(driver, 160))
-			.until(ExpectedConditions.presenceOfElementLocated(firstResourcesTableElementLocator));
-		TestLogger.info("First Resource Table Element Name: <" + firstResourceTableElement.getText() + "> was retrieved");
-		return firstResourceTableElement.getText();
-	}
-	
-	public ResourceInfoPage doubleClickFirstTableElement(){
-		(new WebDriverWait(driver, 160))
-			.until(ExpectedConditions.presenceOfElementLocated(firstResourcesTableElementLocator));
-		WebElement firstResourceTableElement = driver.findElement(firstResourcesTableElementLocator);
+	public ResourceInfoPage doubleClickOnResourceFromTable(String resourceName){
+		WebElement resource = getResourceFromAllPagesByName(resourceName, getResourcesTableNumberOfPages());
+		String resourceItemName = resource.findElement(resourceListItemLocator).getText();
 		Actions action = new Actions(driver);
-	    action.doubleClick(firstResourceTableElement);
-	    action.perform();
-	    TestLogger.info("Double Click on First Resource Table Element");
+		action.doubleClick(resource);
+		action.perform();
+		TestLogger.info("Double Click on Resource: <"+resourceItemName+"> from Resources Table");
 		return new ResourceInfoPage(driver);
 	}
 	
-	public String getFirstTableElementDisplayName(){
-		(new WebDriverWait(driver, 160))
-			.until(ExpectedConditions.presenceOfElementLocated(firstResourcesTableElementLocator));
-		WebElement firstResourceTableElement = driver.findElements(firstResourcesTableElementLocator).get(1);
-		TestLogger.info("First Resource Table Element Display Name: <" + firstResourceTableElement.getText() + "> was retrieved");
-		return firstResourceTableElement.getText();
-	}
-	
-	public ResourcePage clickFirstTableElementCheckBox(){
-		WebElement firstResourceTableCheckBox = (new WebDriverWait(driver, 160))
-			.until(ExpectedConditions.presenceOfElementLocated(firstResourcesTableCheckBoxLocator));
-		TestLogger.info("First Resource Table Element Check Box was clicked");
-		firstResourceTableCheckBox.click();
+	public ResourcePage clickOnResourceFromTable(String resourceName){
+		WebElement resource = getResourceFromAllPagesByName(resourceName, getResourcesTableNumberOfPages());
+		String resourceItemName = resource.findElement(resourceListItemLocator).getText();
+		resource.click();
+		TestLogger.info("Click on Resource: <"+resourceItemName+"> from Resources Table");
 		return this;
 	}
 	
-	private int getResourceTableSize(){
-		WebElement resourceTable = (new WebDriverWait(driver, 160))
-			.until(ExpectedConditions.presenceOfElementLocated(resourceTableLocator));
-		TestLogger.info("The resources Table size was retrieved");
-		return resourceTable.findElements(By.xpath("div")).size();
+	public String getResourceNameInTable(String resourceName){
+		WebElement resource = getResourceFromAllPagesByName(resourceName, getResourcesTableNumberOfPages());
+		String resourceItemName = resource.findElement(resourceListItemLocator).getText();
+		TestLogger.info("Resource Name: <" + resourceItemName + "> was retrieved");
+		return resourceItemName;
 	}
 	
-	public boolean hasResourceTableElements(){
-		return getResourceTableSize() == 0;
+	public boolean verifyElementDoesNotExist(String resourceName){
+		WebElement resource = getResourceFromAllPagesByName(resourceName, getResourcesTableNumberOfPages());
+		return resource == null? true:false;
+	}
+	
+	private WebElement getResourceFromAllPagesByName(String resourceName, int numberOfPages){
+		WebElement resource = null;
+		for(int index = 1; index <= numberOfPages; index++){
+			 resource = getResourceByName(resourceName);
+			 if(resource != null){
+				 TestLogger.info("Resource: <" +resourceName+ "> was found in page:" + index);
+				 return resource;
+			 }
+			 clickNextPageButton(index + 1, numberOfPages);
+			 TestLogger.info("Searching for resource in page: " + index);
+		}
+		return resource;
+	}
+	
+	private void clickNextPageButton(int actualPage, int numberOfPages){
+		(new WebDriverWait(driver, 60))
+			.until(ExpectedConditions.presenceOfElementLocated(nextPageButtonLocator));
+		WebElement nextPageButton = driver.findElement(nextPageButtonLocator);
+		nextPageButton.click();
+		
+		String nextPageinput = driver.findElement(nextPageInputLocator).getAttribute("value");
+		while(Integer.parseInt(nextPageinput)!= actualPage && actualPage <= numberOfPages){
+			nextPageinput = driver.findElement(nextPageInputLocator).getAttribute("value");
+		}
+		TestLogger.info("The Next Page button was clicked");
+	}
+	
+	private int getResourcesTableNumberOfPages(){
+		WebElement numberOfPages = (new WebDriverWait(driver, 60))
+			.until(ExpectedConditions.presenceOfElementLocated(resourceTableNumberOfPagesLocator));
+		String pages = numberOfPages.getText().replace("/ ", "");
+		TestLogger.info("The number of Pages of the Resources Table is: " + Integer.parseInt(pages));
+		return Integer.parseInt(pages);
+	}
+	
+	private WebElement getResourceByName(String resourceName){
+		WebElement resources = (new WebDriverWait(driver, 60))
+			.until(ExpectedConditions.presenceOfElementLocated(resourceListLocator));
+		List<WebElement> resourcesTable = resources.findElements(divElementLocator);
+		for (WebElement resource : resourcesTable) {
+			String resourceItemName = resource.findElement(resourceListItemLocator).getText();
+			if(resourceItemName.equals(resourceName)){
+				TestLogger.info("Resource: <" + resourceItemName + "> was retrieved from Resources Table");
+				return resource;
+			}
+		}
+		TestLogger.info("Resource: <" + resourceName + "> wasn't found");
+		return null;
 	}
 }

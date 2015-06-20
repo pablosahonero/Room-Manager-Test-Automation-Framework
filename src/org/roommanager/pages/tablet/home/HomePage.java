@@ -11,7 +11,7 @@ import org.roommanager.util.TestLogger;
 
 public class HomePage {
 	private WebDriver driver;
-	private By schedulerLinkLocator = Home.SCHEDULERLINK.value;
+	private By schedulerLinkLocator = Home.SCHEDULER_LINK.value;
 	
 	public HomePage(WebDriver driver){
 		this.driver = driver;

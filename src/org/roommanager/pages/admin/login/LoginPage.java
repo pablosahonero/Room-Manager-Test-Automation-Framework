@@ -12,9 +12,9 @@ import org.roommanager.util.TestLogger;
 
 public class LoginPage {
 	private WebDriver driver;
-	private By signInButtonLocator = Login.SIGNINBUTTON.value;
-	private By usernameTextFieldLocator = Login.USERNAMETEXTFIELD.value;
-	private By passwordTextFieldLocator = Login.PASSWORDTEXTFIELD.value;
+	private By signInButtonLocator = Login.SIGNIN_BUTTON.value;
+	private By usernameTextFieldLocator = Login.USERNAME_TEXT_FIELD.value;
+	private By passwordTextFieldLocator = Login.PASSWORD_TEXT_FIELD.value;
 	
 	public LoginPage(WebDriver driver){
 		this.driver = driver;

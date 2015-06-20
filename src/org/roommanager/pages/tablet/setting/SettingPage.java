@@ -1,5 +1,7 @@
 package org.roommanager.pages.tablet.setting;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,15 +14,16 @@ import org.roommanager.util.TestLogger;
 
 public class SettingPage {
 	private WebDriver driver;
-	private By searchTextFieldLocator = Setting.SEARCHTEXTFIELD.value;
-	private By roomsTableFirstElementLocator= Setting.ROOMSTABLEFIRSTELEMENT.value;
-	private By accepButtonLocator = Setting.ACCEPTBUTTON.value;
-	//private By noItemMessageLocator = Setting.NOITEMMESSAGE.value;
+	private By searchTextFieldLocator = Setting.SEARCH_TEXT_FIELD.value;
+	private By roomsTableFirstElementLocator= Setting.ROOMS_TABLE_FIRST_ELEMENT.value;
+	private By accepButtonLocator = Setting.ACCEPT_BUTTON.value;
+	private By roomsListLocator = Setting.ROOMS_LIST.value;
+	private By roomElementNameLocator = Setting.ROOM_ELEMENT_NAME.value;
+	private By divElementLocator = Setting.DIV_ELEMENT.value;
 	
 	public SettingPage(WebDriver driver){
 		this.driver = driver;
 		driver.get(PropertyReader.getTabletUrl());
-		//driver.navigate().refresh();
 	}
 	
 	public SettingPage waitForSettingpageToLoad(){
@@ -54,6 +57,28 @@ public class SettingPage {
 		accepButton.click();
 		TestLogger.info("Accept Button was clicked");
 		return new HomePage(driver);
+	}
+	
+	public SettingPage clickRoomItem(String roomName){
+		WebElement room = getRoomItem(roomName);
+		room.click();
+		return this;
+	}
+	
+	private WebElement getRoomItem(String roomName){
+		WebElement rooms = (new WebDriverWait(driver, 60))
+			.until(ExpectedConditions.presenceOfElementLocated(roomsListLocator));
+		List <WebElement> roomsList = rooms.findElements(divElementLocator);
+		
+		for (WebElement room : roomsList) {
+			String roomItemName = room.findElement(roomElementNameLocator).getText();
+			if(roomItemName.equals(roomName)){
+				TestLogger.info("Room: <"+ roomItemName +"> was found on the Available Rooms List");
+				return room;
+			}
+		}
+		TestLogger.info("Room: <"+ roomName +"> wasn't found on the Available Rooms List");
+		return null;
 	}
 	
 }

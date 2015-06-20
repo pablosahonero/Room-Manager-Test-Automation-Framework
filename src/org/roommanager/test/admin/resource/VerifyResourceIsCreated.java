@@ -17,6 +17,12 @@ import org.testng.annotations.Test;
 
 public class VerifyResourceIsCreated {
 	private WebDriver driver;
+	private String username = PropertyReader.getUsername();
+	private String password = PropertyReader.getUserPassword();
+	private String resourceName = "ResourcePablo";
+	private String resourceDisplayName = "ResourcePablo";
+	private String resourceDescription = "Description ResourcePablo";
+	private String errorMessage = "The test failed because the created Resource was not found";
 	
 	@BeforeSuite
 	public void setUp() throws Exception {
@@ -25,12 +31,6 @@ public class VerifyResourceIsCreated {
 	
 	@Test
 	public void verifyAResourceIsCreated() throws Exception {
-		String username = PropertyReader.getUsername();
-		String password = PropertyReader.getUserPassword();
-		String resourceName = "ResourcePablo";
-		String resourceDisplayName = "ResourcePablo";
-		String resourceDescription = "Description ResourcePablo";
-		String errorMessage = "The test failed because the created Resource was not found";
 		
 		LoginPage login = new LoginPage(driver);
 		
@@ -49,15 +49,14 @@ public class VerifyResourceIsCreated {
 			.enterResourceDescription(resourceDescription);
 		
 		resources = createResource
-			.clickSaveResourceButton()
-			.searchResourceByName(resourceName);
+			.clickSaveResourceButton();
 		
-		assertEquals(errorMessage, resources.getFirstTableElementName(), resourceName);
+		String actualResourceName = resources.getResourceNameInTable(resourceName);
+		assertEquals(errorMessage, actualResourceName, resourceName);
 	}
 	
 	@AfterTest
 	public void testTearDown(){
-		String resourceName = "ResourcePablo";
 		HttpRequest.deleteResourceByName(resourceName);
 	}
 	

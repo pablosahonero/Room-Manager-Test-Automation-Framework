@@ -3,7 +3,7 @@ package org.roommanager.util;
 import org.apache.log4j.Logger;
 
 public class TestLogger {
-	 /* Get actual class name to be printed on */
+	
 	   static Logger log = Logger.getLogger(TestLogger.class.getName());
 	   
 	   public static void debug(String message){

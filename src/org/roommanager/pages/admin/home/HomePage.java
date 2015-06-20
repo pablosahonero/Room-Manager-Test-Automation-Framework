@@ -11,7 +11,7 @@ import org.roommanager.util.TestLogger;
 
 public class HomePage extends SideMenuBarPage{
 	private WebDriver driver;
-	private By roomManagerLinkLocator = Home.ROOMMANAGERTEXT.value;
+	private By roomManagerLinkLocator = Home.ROOM_MANAGER_TEXT.value;
 	
 	public HomePage(WebDriver driver){
 		super(driver);

@@ -16,15 +16,17 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 public class HttpRequest {
-
+	private static final String CODIFICATION_UTF_8 = "UTF-8";
+	private static final String CONTENT_TYPE_HEADER = "content-type";
+	private static final String APPLICATION_CONTENT_TYPE = "application/json";
+	private static final String AUTHORIZATION_HEADER = "Authorization";
+	private static final String RESOURCE_BODY = "{ \"name\": \"[name]\", \"customName\": \"[displayName]\",\"fontIcon\": \"[fontIcon]\", \"from\": \"\", \"description\": \"[description]\"}";
+	private static final String  MEETING_BODY = "{\"organizer\": \"[organizer]\",\"title\": \"[subject]\", \"start\": \"[startTime]\",\"end\": \"[endTime]\","
+			+ " \"location\": \"[roomName]\",\"roomEmail\": \"[roomEmail]\", \"resources\": [\"[roomEmail]\"], \"attendees\": [[attendees]]}";
+	
 	public static void createMeeting(String organizer, String subject, String startTime, 
-			String endTime, String roomName, String attendees){
-		String meeting = "{\"organizer\": \"[organizer]\","
-				+ "\"title\": \"[subject]\", \"start\": \"[startTime]\","
-				+ "\"end\": \"[endTime]\", \"location\": \"[roomName]\","
-				+ "\"roomEmail\": \"[roomEmail]\", \"resources\": ["
-				+ "\"[roomEmail]\"], \"attendees\": ["
-				+ "[attendees]]}";
+		String endTime, String roomName, String attendees){
+		String meeting= MEETING_BODY;
 		String url = PropertyReader.getRoomManagerUrl() + "services/[serviceId]/rooms/[roomId]/meetings";
 		String serviceId = getEmailServiceId();
 		String roomId = getRoomIdByName(roomName);
@@ -32,7 +34,7 @@ public class HttpRequest {
 		url = url.replace("[serviceId]", serviceId).replace("[roomId]", roomId);
 		
 		String roomEmail = getRoomEmailByName(roomName);
-		meeting = meeting.replace("[organizer]", organizer)
+		meeting= meeting.replace("[organizer]", organizer)
 			.replace("[subject]", subject)
 			.replace("[startTime]", startTime)
 			.replace("[endTime]", endTime)
@@ -89,8 +91,7 @@ public class HttpRequest {
 
 	public static void createResource(String name, String displayName, String icon, String description){
 		String url = PropertyReader.getRoomManagerUrl() + "resources";
-		String resourceBody = "{ \"name\": \"[name]\", \"customName\": \"[displayName]\","
-				+ " \"fontIcon\": \"[fontIcon]\", \"from\": \"\", \"description\": \"[description]\"}";
+		String resourceBody = RESOURCE_BODY;
 		
 		resourceBody = resourceBody.replace("[name]", name)
 			.replace("[displayName]", displayName)
@@ -113,15 +114,16 @@ public class HttpRequest {
             JSONParser parser = new JSONParser();
             jsonObject = parser.parse(json);
         } catch (Exception e) {
+        	TestLogger.error(e.getMessage());
         }
 		return jsonObject;
 	}
 	
 	private static String getHttpMethod(String url){
 		String json = null;
-		String codification = "UTF-8";
-		String contentTypeHeader = "content-type";
-		String contentType = "application/json";
+		String codification = CODIFICATION_UTF_8;
+		String contentTypeHeader = CONTENT_TYPE_HEADER;
+		String contentType = APPLICATION_CONTENT_TYPE;
 		
 		try (CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
 			HttpGet request = new HttpGet(url);
@@ -129,14 +131,15 @@ public class HttpRequest {
             HttpResponse result = httpClient.execute(request);
             json = EntityUtils.toString(result.getEntity(), codification);
         } catch (IOException ex) {
+        	TestLogger.error(ex.getMessage());
         }
 		return json;
 	}
 	
 	private static void deleteHttpMethod(String url){
-		String contentTypeHeader = "content-type";
-		String contentType = "application/json";
-		String authorizationHeader = "Authorization";
+		String contentTypeHeader = CONTENT_TYPE_HEADER;
+		String contentType = APPLICATION_CONTENT_TYPE;
+		String authorizationHeader = AUTHORIZATION_HEADER;
 		String authorizationValue = PropertyReader.getBasicAuthentication();
 		
 		try (CloseableHttpClient httpClient = HttpClientBuilder.create().build()){
@@ -152,13 +155,14 @@ public class HttpRequest {
                 response.close();
             }
         } catch (IOException ex) {
+        	TestLogger.error(ex.getMessage());
         }
 	}
 	
 	private static void postHttpMethod(String url, String body){
-		String contentTypeHeader = "content-type";
-		String contentType = "application/json";
-		String authorizationHeader = "Authorization";
+		String contentTypeHeader = CONTENT_TYPE_HEADER;
+		String contentType = APPLICATION_CONTENT_TYPE;
+		String authorizationHeader = AUTHORIZATION_HEADER;
 		String authorizationValue = PropertyReader.getBasicAuthentication();
 		
 		try (CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
@@ -175,6 +179,7 @@ public class HttpRequest {
                 response.close();
             }
         } catch (IOException ex) {
+        	TestLogger.error(ex.getMessage());
         }
 	}
 	

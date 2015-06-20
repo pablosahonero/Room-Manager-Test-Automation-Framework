@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<suite name="Build Verification Test">
+	<listeners>
+    	<listener class-name="org.uncommons.reportng.HTMLReporter"/>
+    	<listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>
+    	<listener class-name="org.roommanager.util.TestNgListener"/>"/>
+  	</listeners>
+    <suite-files>
+    	<suite-file path="../acceptance/tablet/tablet-acceptance.xml"/>
+        <suite-file path="../acceptance/admin/admin-acceptance.xml"/>
+	</suite-files>
+</suite>
